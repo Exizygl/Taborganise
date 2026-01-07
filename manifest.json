@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Window Profiles",
   "version": "0.1",
   "description": "Saving and restoring windows by theme",
@@ -11,10 +11,10 @@
   ],
 
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"]
   },
 
-  "action": {
+  "browser_action": {
     "default_popup": "popup.html"
   }
 }
