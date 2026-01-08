@@ -1,0 +1,38 @@
+body {
+  font-family: system-ui, sans-serif;
+  width: 280px;
+  padding: 10px;
+}
+
+h1 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 13px;
+  margin-top: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.profile-name {
+  font-size: 13px;
+}
+
+.profile-meta {
+  font-size: 11px;
+  color: #666;
+}
