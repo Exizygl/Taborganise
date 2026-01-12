@@ -2,10 +2,13 @@ browser.runtime.onMessage.addListener(async (msg) => {
   if (msg.type === "SAVE_PROFILE") {
     const win = await browser.windows.getCurrent({ populate: true });
 
-    const tabs = win.tabs.map(t => ({
+    const tabs = win.tabs
+    .filter(t => t.url && t.url.startsWith("http"))
+    .map(t => ({
       url: t.url,
       title: t.title
     }));
+
 
     const { profiles = {} } = await browser.storage.local.get("profiles");
 
