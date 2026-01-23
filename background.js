@@ -1,3 +1,7 @@
+browser.browserAction.onClicked.addListener(() => {
+  browser.runtime.openOptionsPage();
+});
+
 browser.runtime.onMessage.addListener(async (msg) => {
   if (msg.type === "SAVE_PROFILE") {
   const win = await browser.windows.getCurrent({ populate: true });
