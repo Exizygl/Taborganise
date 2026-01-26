@@ -50,3 +50,21 @@ if (msg.type === "OPEN_PROFILE") {
   await browser.storage.local.set({ profiles });
 }
 });
+
+browser.tabs.onCreated.addListener(async (tab) => {
+  const profileId = linkedWindows[tab.windowId];
+  if (!profileId) return;
+
+  const { profiles = {} } = await browser.storage.local.get("profiles");
+  const profile = profiles[profileId];
+  if (!profile) return;
+
+  profile.tabs.push({
+    tabId: tab.id,
+    url: tab.url,
+    title: tab.title
+  });
+
+  profile.updatedAt = Date.now();
+  await browser.storage.local.set({ profiles });
+});
