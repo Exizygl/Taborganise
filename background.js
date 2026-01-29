@@ -68,3 +68,25 @@ browser.tabs.onCreated.addListener(async (tab) => {
   profile.updatedAt = Date.now();
   await browser.storage.local.set({ profiles });
 });
+
+browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+  if (!changeInfo.url && !changeInfo.title) return;
+
+  const profileId = linkedWindows[tab.windowId];
+  if (!profileId) return;
+
+  const { profiles = {} } = await browser.storage.local.get("profiles");
+  const profile = profiles[profileId];
+  if (!profile) return;
+
+  const entry = profile.tabs.find(t => t.tabId === tabId);
+  if (!entry) return;
+
+  if (changeInfo.url) entry.url = changeInfo.url;
+  if (changeInfo.title) entry.title = changeInfo.title;
+
+  profile.updatedAt = Date.now();
+  await browser.storage.local.set({ profiles });
+
+  console.log("🔄 Tab updated", tabId, changeInfo.url);
+});
