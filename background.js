@@ -94,3 +94,17 @@ browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 
   console.log("🔄 Tab synced", tabId, tab.url);
 });
+
+if (msg.type === "EXPORT_DATA") {
+  const data = await browser.storage.local.get([
+    "profiles",
+    "favoriteProfileId"
+  ]);
+
+  return {
+    version: 1,
+    exportedAt: Date.now(),
+    profiles: data.profiles || {},
+    favoriteProfileId: data.favoriteProfileId || null
+  };
+}
