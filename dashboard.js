@@ -43,4 +43,25 @@ createBtn.onclick = async () => {
   loadProfiles();
 };
 
+
+document.getElementById("export").addEventListener("click", async () => {
+  const data = await browser.runtime.sendMessage({
+    type: "EXPORT_DATA"
+  });
+
+  const blob = new Blob(
+    [JSON.stringify(data, null, 2)],
+    { type: "application/json" }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "window-profiles.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+});
+
 loadProfiles();
