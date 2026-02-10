@@ -108,3 +108,18 @@ if (msg.type === "EXPORT_DATA") {
     favoriteProfileId: data.favoriteProfileId || null
   };
 }
+
+if (msg.type === "IMPORT_DATA") {
+  const { profiles, favoriteProfileId } = msg.data;
+
+  if (!profiles || typeof profiles !== "object") {
+    throw new Error("Invalid import file");
+  }
+
+  await browser.storage.local.set({
+    profiles,
+    favoriteProfileId: favoriteProfileId || null
+  });
+
+  return { success: true };
+}
