@@ -64,4 +64,21 @@ document.getElementById("export").addEventListener("click", async () => {
   URL.revokeObjectURL(url);
 });
 
+document.getElementById("import").addEventListener("click", async () => {
+  const fileInput = document.getElementById("importFile");
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  const text = await file.text();
+  const data = JSON.parse(text);
+
+  await browser.runtime.sendMessage({
+    type: "IMPORT_DATA",
+    data
+  });
+
+  alert("Import successful!");
+  location.reload();
+});
+
 loadProfiles();
